@@ -1,1 +1,1 @@
-include Flask-JSGlue/templates/jsglue/js_bridge.js
+include flask_jsglue/templates/jsglue/js_bridge.js
