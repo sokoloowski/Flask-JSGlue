@@ -1,5 +1,6 @@
 from flask import render_template, make_response, url_for, Blueprint
 from markupsafe import Markup
+import os
 import re
 import json
 
@@ -36,7 +37,7 @@ class JSGlue(object):
 
     def init_app(self, app):
         self.app = app
-        bp = Blueprint('jsglue', __name__)
+        bp = Blueprint('jsglue', __name__, template_folder=os.path.join(os.path.dirname(__file__), 'templates'))
 
         @bp.route(JSGLUE_JS_PATH)
         def serve_js():
