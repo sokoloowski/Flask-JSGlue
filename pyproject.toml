@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Flask-JSGlue"
+version = "0.3.1"
+dependencies = [
+    "Flask"
+]

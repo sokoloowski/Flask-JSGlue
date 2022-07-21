@@ -1,9 +1,8 @@
-from flask import render_template
-from flask import make_response
-from flask import url_for
-from jinja2 import Markup
+from flask import render_template, make_response, url_for, Blueprint
+from markupsafe import Markup
 import re
 import json
+
 
 JSGLUE_JS_PATH = '/jsglue.js'
 JSGLUE_NAMESPACE = 'Flask'
@@ -37,12 +36,15 @@ class JSGlue(object):
 
     def init_app(self, app):
         self.app = app
+        bp = Blueprint('jsglue', __name__)
 
-        @app.route(JSGLUE_JS_PATH)
+        @bp.route(JSGLUE_JS_PATH)
         def serve_js():
-            return make_response(
-                (self.generate_js(), 200, {'Content-Type': 'text/javascript'})
-            )
+            res = make_response(self.generate_js())
+            res.headers['Content-Type'] = 'text/javascript'
+            return res
+
+        app.register_blueprint(bp)
 
         @app.context_processor
         def context_processor():
@@ -58,5 +60,5 @@ class JSGlue(object):
 
     @staticmethod
     def include():
-        js_path = url_for('serve_js')
+        js_path = url_for('jsglue.serve_js')
         return Markup('<script src="%s" type="text/javascript"></script>') % (js_path,)

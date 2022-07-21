@@ -1,7 +1,7 @@
 from flask import Flask
 import unittest
 import subprocess
-from flask_jsglue import JSGlue
+from Flask_JSGlue import JSGlue
 
 
 def runUrlFor(src, url_for):
